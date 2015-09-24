@@ -36,19 +36,7 @@
     </nav>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="{% if active_menu == 'item1' %} active{% endif %}">
-              <a href="#">Menu Item 1</a>
-            </li>
-            <li class="{% if active_menu == 'item2' %} active{% endif %}">
-              <a href="#">Menu Item 2</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-md-10 main">
-          {% block maincontent %}{% endblock %}
-        </div>
+        {% block maincontent %}{% endblock %}
       </div>
       <hr>
       <footer>
