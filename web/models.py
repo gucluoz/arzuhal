@@ -5,13 +5,24 @@ class Subject(models.Model):
   name = models.CharField(max_length=200)
   containerdirectory = models.CharField(max_length=50)
 
+  def __unicode__(self):
+    return self.name
+
+class Keyword(models.Model):
+  name = models.CharField(max_length=30)
+
+  def __unicode__(self):
+    return self.name
+
 class Petition(models.Model):
   name = models.CharField(max_length=200)
   publishdate = models.DateTimeField('Date first published')
   publishedby = models.ForeignKey(User)
   subject = models.ForeignKey(Subject)
+  keywords = models.ManyToManyField(Keyword)
+  description = models.CharField(max_length=1000)
 
-  def __str__(self):
+  def __unicode__(self):
     return self.name
 
 class Template(models.Model):
@@ -26,11 +37,5 @@ class Meta(models.Model):
   petition = models.ForeignKey(Petition)
   maxlength = models.IntegerField(default=100)
 
-  def __str__(self):
-    return self.name
-
-class Keyword(models.Model):
-  name = models.CharField(max_length=30)
-
-  def __str__(self):
+  def __unicode__(self):
     return self.name

@@ -1,0 +1,9 @@
+{% extends "web/base.html.j2" %}
+
+{% block title %}{{ petition.name }}{% endblock title %}
+{% block maincontent %}
+  <h1>{{ petition.name }}</h1>
+  <p>{{ petition.description }}</p>
+
+
+{% endblock maincontent %}
