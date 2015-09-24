@@ -6,18 +6,44 @@
   <div class="row">
       <div class="col-md-6">
         <h2/>
-        <div id="custom-search-input">
+        <form action="{% url 'index' %}" method="POST">
+          {% csrf_token %}
+          <div id="custom-search-input">
             <div class="input-group col-md-12">
-                <input type="text" class="form-control input-lg" placeholder="Dilekçe Ara" />
+                <input type="text" class="form-control input-lg" placeholder="Dilekçe Ara" name="q"/>
                 <span class="input-group-btn">
-                    <button class="btn btn-info btn-lg" type="button">
+                    <button type="submit" class="btn btn-info btn-lg" type="button">
                         <i class="glyphicon glyphicon-search"></i>
                     </button>
                 </span>
             </div>
           </div>
+        </form>
       </div>
   </div>
+  {% if q %}
+  <div class="row">
+    <div class="col-md-6">
+      "{{ q }}" için arama sonuçları :
+      {% for p in results %}
+        <p>
+          <h3>
+            <a href="{% url 'detail' p.pk %}">{{ p.name|truncatewords:10 }}</a>
+          </h3>
+          <div>
+            <cite>{% url 'detail' p.pk %}</cite>
+            <span>{{ p.description|truncatewords:20 }}</span>
+            <span>({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)</span>
+          </div>
+        </p>
+      {% empty %}
+        <cite>Hiç bir sonuç bulunamadı :(</cite>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
 </div>
-
 {% endblock maincontent %}
+{% if q %}
+  {% block footercontent %}Arama süresi : {{ searchTime|floatformat:2 }} milisecond{{ searchTime|pluralize }}{% endblock %}
+{% endif %}
