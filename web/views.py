@@ -1,6 +1,8 @@
 import time
+import json
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
+from django.http import HttpResponse
 from haystack.query import SearchQuerySet
 
 from .models import Petition
@@ -20,10 +22,10 @@ class PetitionDetailView(generic.DetailView):
 
 
 def indexsearch(request, q):
-  searcStartTime = time.time()
+  searchStartTime = time.time()
   results = SearchQuerySet().auto_query(q)
-  searchElapsedTime = (time.time() - searcStartTime)*1000
-  #print "Search request -> %.3f ms" % searchElapsedTime
+  searchElapsedTime = (time.time() - searchStartTime)*1000
+
   resultSet = []
   for r in results:
     resultSet.append(r.object)
@@ -32,6 +34,7 @@ def indexsearch(request, q):
     'q' : q,
     'searchTime' : searchElapsedTime,
   }
+
   return render(request, 'web/index.html.j2', context)
 
 
@@ -41,6 +44,20 @@ def index(request):
     return indexsearch(request,searchString)
   except:
     return render(request, 'web/index.html.j2')
+
+def autoComplete(request):
+  try:
+    searchString = request.GET['q']
+    sqs = SearchQuerySet().autocomplete(content_auto=searchString)[:5]
+    suggestions = [' '.join(result.text.split(' ')[:5]).strip() for result in sqs]
+    suggestion_data = json.dumps({
+      'results': suggestions
+      })
+
+    return HttpResponse(suggestion_data, content_type='application/json')
+  except:
+
+    return HttpResponse(status=404)
 
 """
 Su anda kullanilamiyor
