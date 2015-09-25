@@ -58,13 +58,3 @@ def autoComplete(request):
   except:
 
     return HttpResponse(status=404)
-
-"""
-Su anda kullanilamiyor
-
-def petitionDetail(request, pk):
-  petition = get_object_or_404(Petition, pk=pk)
-  context = {'petition' : petition}
-  return render(request, 'web/petitiondetail.html.j2', context)
-
-"""
