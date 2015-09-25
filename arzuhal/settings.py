@@ -1,4 +1,5 @@
 import os
+import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -56,11 +57,19 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'arzuhal',
-    'USER' : 'arzuhal',
-    'PASSWORD' : '1',
-    'HOST' : '127.0.0.1',
+        'USER' : 'arzuhal',
+        'PASSWORD' : '1',
+        'HOST' : '127.0.0.1',
     }
 }
+
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'TEST_CHARSET': 'UTF8', 
+        'NAME': ':memory:', 
+        'TEST_NAME': ':memory:',
+    }
 
 HAYSTACK_CONNECTIONS = {
     'default': {
