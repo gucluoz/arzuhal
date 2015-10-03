@@ -23,8 +23,10 @@ class PetitionDetailView(generic.DetailView):
 
 def indexsearch(request, q):
   searchStartTime = time.time()
-  results = SearchQuerySet().auto_query(q)
+  results = SearchQuerySet().auto_query(q)[:100]
   searchElapsedTime = (time.time() - searchStartTime)*1000
+
+  print 'Sarch request took -> %.3f ms' % searchElapsedTime 
 
   resultSet = []
   for r in results:
