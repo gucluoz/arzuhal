@@ -75,11 +75,12 @@ def download(request, ticket):
     response['Content-Disposition'] = 'attachment; filename=' + template.petition.ascii_filename
   except:
     return HttpResponse(status=404)
-  
   return response
 
 
+def detailByName(request, name):
+  petition = get_object_or_404(
+    Petition.objects.filter(ascii_filename=name))
+  context = {'petition': petition, 'templates_ordered': petition.template_set.order_by('-version')}
 
-
-
-
+  return render(request, 'web/petitiondetail.html.j2', context)
