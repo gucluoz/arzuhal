@@ -30,8 +30,8 @@ class Template(models.Model):
   filename = models.CharField(max_length=100)
   petition = models.ForeignKey(Petition)
 
-  def __str__(self):
-    return self.petition.name % " " % self.version
+  def __unicode__(self):
+    return self.petition.name + " " + str(self.version)
 
 class Meta(models.Model):
   petition = models.ForeignKey(Petition)
