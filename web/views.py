@@ -33,9 +33,6 @@ def indexsearch(request, q):
   searchStartTime = time.time()
   results = SearchQuerySet().auto_query(q)[:100]
   searchElapsedTime = (time.time() - searchStartTime)*1000
-
-  print 'Sarch request took -> %.3f ms' % searchElapsedTime 
-
   resultSet = []
   for r in results:
     resultSet.append(r.object)
@@ -59,7 +56,7 @@ def autoComplete(request):
   try:
     searchString = request.GET['q']
     sqs = SearchQuerySet().autocomplete(content_auto=searchString)[:5]
-    suggestions = [' '.join(result.text.split(' ')[:5]).strip() for result in sqs]
+    suggestions = [' '.join(result.object.name.split(' ')[:5]).strip() for result in sqs]
     suggestion_data = json.dumps({
       'results': suggestions
       })
