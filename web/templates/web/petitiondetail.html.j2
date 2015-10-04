@@ -4,6 +4,29 @@
 {% block maincontent %}
   <h1>{{ petition.name }}</h1>
   <p>{{ petition.description }}</p>
-
-
+  <p>
+    {% if templates_ordered > 0 %}
+      <a href="{% url 'download' templates_ordered.first.downloadticket %}" type="button" class="btn btn-success btn-lg">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true" /> İndir
+      </a>
+    {% else %}
+      Dosya bulunamadı.
+    {% endif %}
+  </p>
+  {% if templates_ordered.count > 1 %}
+    <p>
+      <h4>Önceki Sürümler</h4>
+      <ul>
+        {% for v in templates_ordered %}
+        {% if not forloop.first %}
+        <li><a href="{% url 'download' v.downloadticket %}">v{{ v.version }}.0</a> ({{ v.publishdate|timesince }} önce {{ v.publishedby }} tarafından)</li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </p>
+  {% endif %}
+  <span>
+    <ul>
+    </ul>
+  </span>
 {% endblock maincontent %}

@@ -8,4 +8,5 @@ urlpatterns = [
   url(r'^a/', views.autoComplete, name='autocomplete'),
   url(r'^list/$', views.PetitionListView.as_view(), name='list'),
   url(r'^detail/(?P<pk>[0-9]+)$', views.PetitionDetailView.as_view(), name='detail'),
+  url(r'^d/(?P<ticket>[A-Za-z0-9]{32})', views.download, name='download'),
 ]

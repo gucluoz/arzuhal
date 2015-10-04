@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django.utils.timezone
 from django.conf import settings
 
 
@@ -20,18 +21,13 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Meta',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('maxlength', models.IntegerField(default=100)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Petition',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=200)),
-                ('publishdate', models.DateTimeField(verbose_name=b'Date first published')),
+                ('publishdate', models.DateTimeField(default=django.utils.timezone.now, verbose_name=b'Date first published')),
+                ('description', models.CharField(max_length=1000)),
+                ('keywords', models.ManyToManyField(to='web.Keyword')),
                 ('publishedby', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -49,17 +45,16 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('version', models.IntegerField(default=1)),
                 ('filename', models.CharField(max_length=100)),
+                ('downloadticket', models.CharField(max_length=32, null=True, blank=True)),
+                ('ticketexpire', models.DateTimeField(null=True, verbose_name=b'Ticket expiration timestamp', blank=True)),
+                ('publishdate', models.DateTimeField(default=django.utils.timezone.now, verbose_name=b'Date first published')),
                 ('petition', models.ForeignKey(to='web.Petition')),
+                ('publishedby', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='petition',
             name='subject',
             field=models.ForeignKey(to='web.Subject'),
-        ),
-        migrations.AddField(
-            model_name='meta',
-            name='petition',
-            field=models.ForeignKey(to='web.Petition'),
         ),
     ]
