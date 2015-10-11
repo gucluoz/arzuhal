@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 def generate_download_ticket(instance, filename):
-  extension = filename.split('.')[-1:]
+  extension = filename.split('.')[-1]
   ticket = binascii.hexlify(os.urandom(16))
   instance.downloadticket = ticket
   if extension == filename:
