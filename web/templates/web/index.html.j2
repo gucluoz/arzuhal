@@ -1,6 +1,5 @@
 {% extends "web/base.html.j2" %}
 
-{% block title %}Arzuhalci{% endblock title %}
 {% block maincontent %}
 <div class="container">
   <br>
@@ -43,9 +42,11 @@
   {% endif %}
 </div>
 {% endblock maincontent %}
-{% if q %}
-  {% block footercontent %}Arama süresi : {{ searchTime|floatformat:2 }} milisecond{{ searchTime|pluralize }}{% endblock %}
-{% endif %}
+{% block footercontent %}
+  {% if q %}
+    Arama süresi : {{ searchTime|floatformat:2 }} milisecond{{ searchTime|pluralize }}
+  {% endif %}
+{% endblock %}
 
 {% block scriptcontent %}
 {% load static %}
