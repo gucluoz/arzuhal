@@ -1,0 +1,53 @@
+{% extends "web/base.html.j2" %}
+
+{% block title %}Arzuhalci{% endblock title %}
+{% block maincontent %}
+<div class="container">
+  <br>
+  <div class="row">
+      <div class="col-md-6">
+        <form action="{% url 'index' %}" method="POST">
+          {% csrf_token %}
+            <div id="custom-search-input">
+              <div class="input-group col-md-12">
+                  <input name="q" class="typeahead form-control" placeholder="Dilekçe Ara" />
+                  <span class="input-group-btn">
+                      <button type="submit" class="btn btn-info btn-lg" type="button">
+                          <i class="glyphicon glyphicon-search"></i>
+                      </button>
+                  </span>
+              </div>
+            </div>
+        </form>
+      </div>
+  </div>
+  {% if q %}
+  <div class="row">
+    <div class="col-md-6">
+      "{{ q }}" için arama sonuçları :
+      {% for p in results %}
+        <p>
+          <h3>
+            <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:10 }}</a>
+          </h3>
+          <div>
+            <span>{{ p.description|truncatewords:20 }}</span><br/>
+            <span>({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)</span>
+          </div>
+        </p>
+      {% empty %}
+        <cite>Hiç bir sonuç bulunamadı :(</cite>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock maincontent %}
+{% if q %}
+  {% block footercontent %}Arama süresi : {{ searchTime|floatformat:2 }} milisecond{{ searchTime|pluralize }}{% endblock %}
+{% endif %}
+
+{% block scriptcontent %}
+{% load static %}
+<script src="{% static 'web/js/vendor/typeahead.bundle.min.js' %}"></script>
+{% endblock scriptcontent %}

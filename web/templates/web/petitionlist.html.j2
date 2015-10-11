@@ -1,0 +1,12 @@
+{% extends "web/base.html.j2" %}
+
+{% block title %}Dilekçe Listesi{% endblock title %}
+{% block maincontent %}
+  <ul>
+  {% for p in object_list %}
+    <li>
+      <a href="{% url 'detail' p.pk %}">{{ p.name|truncatewords:5 }}</a> ({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)
+    </li>
+  {% endfor %}
+  </ul>
+{% endblock maincontent %}
