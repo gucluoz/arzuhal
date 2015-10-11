@@ -29,7 +29,7 @@ class Petition(models.Model):
 
   def save(self):
     super(Petition, self).save()
-    self.ascii_filename = self.name.lower().encode('ascii','ignore').replace(' ','_')
+    self.ascii_filename = self.name.lower().encode('ascii','ignore').replace(' ','_').replace('?','').replace(',','').replace('(','').replace(')','').replace('.','')[:80]
     super(Petition, self).save()
 
   def __unicode__(self):

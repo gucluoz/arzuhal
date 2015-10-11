@@ -31,7 +31,6 @@
             <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:10 }}</a>
           </h3>
           <div>
-            <!--<cite>{% url 'detailbyName' p.ascii_filename %}</cite><br/>-->
             <span>{{ p.description|truncatewords:20 }}</span><br/>
             <span>({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)</span>
           </div>
