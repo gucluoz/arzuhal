@@ -5,12 +5,12 @@
   <h1>{{ petition.name }}</h1>
   <p>{{ petition.description }}</p>
   <p>
-    {% if templates_ordered > 0 %}
-      <a href="{% url 'download' templates_ordered.first.downloadticket %}" type="button" class="btn btn-success btn-lg">
+    {% if first_url %}
+      <a href="{{ first_url }}" type="button" class="btn btn-success btn-lg">
         <span class="glyphicon glyphicon-download-alt" aria-hidden="true" /> İndir
       </a>
     {% else %}
-      Dosya bulunamadı.
+      <cite>Dosya şablonu bulunamadı.</cite>
     {% endif %}
   </p>
   {% if templates_ordered.count > 1 %}

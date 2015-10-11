@@ -7,6 +7,7 @@ from django.views import generic
 from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
 from haystack.query import SearchQuerySet
+from django.core.urlresolvers import reverse
 
 from .models import Petition, Template
 
@@ -26,6 +27,8 @@ class PetitionDetailView(generic.DetailView):
   def get_context_data(self, **kwargs):
     context = super(PetitionDetailView, self).get_context_data(**kwargs)
     context['templates_ordered'] = context['petition'].template_set.order_by('-version')
+    if context['templates_ordered'].count > 0:
+      context['first_url'] = reverse('download', args=context['templates_ordered'].first().downloadticket)
     return context
 
 
