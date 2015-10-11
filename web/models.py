@@ -30,7 +30,7 @@ def filenameify(data):
     u'Ö' : u'o',
     u'İ' : u'i',
     u'?' : u'',
-    u' u' : u'_',
+    u' ' : u'_',
     u'.' : u'',
     u'-' : u'',
     u'(' : u'',
