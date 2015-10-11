@@ -19,19 +19,6 @@ class PetitionListView(generic.ListView):
   def get_queryset(self):
     return Petition.objects.order_by('-publishdate')
 
-
-class PetitionDetailView(generic.DetailView):
-  template_name = 'web/petitiondetail.html.j2'
-  model = Petition
-
-  def get_context_data(self, **kwargs):
-    context = super(PetitionDetailView, self).get_context_data(**kwargs)
-    context['templates_ordered'] = context['petition'].template_set.order_by('-version')
-    if context['templates_ordered'].count > 0:
-      context['first_url'] = reverse('download', args=context['templates_ordered'].first().downloadticket)
-    return context
-
-
 def indexsearch(request, q):
   searchStartTime = time.time()
   results = SearchQuerySet().auto_query(q)[:100]
@@ -82,5 +69,7 @@ def detailByName(request, name):
   petition = get_object_or_404(
     Petition.objects.filter(ascii_filename=name))
   context = {'petition': petition, 'templates_ordered': petition.template_set.order_by('-version')}
+  if context['templates_ordered'].count > 0:
+      context['first_url'] = reverse('download', args=[context['templates_ordered'].first().downloadticket])
 
   return render(request, 'web/petitiondetail.html.j2', context)
