@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 import binascii
 import os
 from django.db import models
@@ -12,6 +14,35 @@ def generate_download_ticket(instance, filename):
     extension = ''
   instance.extension = extension
   return ticket
+
+def filenameify(data):
+  dict = {
+    u'ğ' : u'g',
+    u'ü' : u'u',
+    u'ş' : u's',
+    u'ç' : u'c',
+    u'ö' : u'o',
+    u'ı' : u'i',
+    u'Ğ' : u'g',
+    u'Ü' : u'u',
+    u'Ş' : u's',
+    u'Ç' : u'c',
+    u'Ö' : u'o',
+    u'İ' : u'i',
+    u'?' : u'',
+    u' u' : u'_',
+    u'.' : u'',
+    u'-' : u'',
+    u'(' : u'',
+    u')' : u'',
+    u'=' : u'',
+  }
+
+  for letter in dict:
+    data = data.replace(letter, dict[letter])
+  data = data.lower()
+
+  return data
 
 class Subject(models.Model):
   name = models.CharField(max_length=200)
@@ -37,7 +68,7 @@ class Petition(models.Model):
 
   def save(self):
     super(Petition, self).save()
-    self.ascii_filename = self.name.lower().encode('ascii','ignore').replace(' ','_').replace('?','').replace(',','').replace('(','').replace(')','').replace('.','')[:80]
+    self.ascii_filename = filenameify(self.name)[:80]
     super(Petition, self).save()
 
   def __unicode__(self):
