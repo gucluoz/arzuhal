@@ -81,6 +81,7 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'petitions')
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

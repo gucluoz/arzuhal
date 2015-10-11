@@ -4,6 +4,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+def generate_download_ticket(instance, filename):
+  extension = filename.split('.')[-1:]
+  ticket = binascii.hexlify(os.urandom(16))
+  instance.downloadticket = ticket
+  if extension == filename:
+    extension = ''
+  instance.extension = extension
+  return ticket
 
 class Subject(models.Model):
   name = models.CharField(max_length=200)
@@ -37,16 +45,12 @@ class Petition(models.Model):
 
 class Template(models.Model):
   version = models.IntegerField(default=1)
-  filename = models.CharField(max_length=100)
+  filename = models.FileField(upload_to=generate_download_ticket)
+  extension = models.CharField(max_length=10, blank=True, null=True)
   petition = models.ForeignKey(Petition)
   downloadticket = models.CharField(max_length=32, blank=True, null=True)
   publishdate = models.DateTimeField('Date first published', default=timezone.now)
   publishedby = models.ForeignKey(User)
-
-  def save(self):
-    super(Template, self).save()
-    self.downloadticket = binascii.hexlify(os.urandom(16))
-    super(Template, self).save()
 
   def __unicode__(self):
     return self.petition.name + " " + str(self.version)

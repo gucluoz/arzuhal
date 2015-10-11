@@ -71,8 +71,8 @@ def download(request, ticket):
   template = get_object_or_404(
     Template.objects.filter(downloadticket=ticket))
   try:
-    response = HttpResponse(FileWrapper(open(os.path.dirname(os.path.abspath(__file__)) + '/petitions/' + template.petition.subject.containerdirectory + '/' + template.filename)),content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-    response['Content-Disposition'] = 'attachment; filename=' + template.petition.ascii_filename
+    response = HttpResponse(FileWrapper(open(template.filename.path)),content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response['Content-Disposition'] = 'attachment; filename=' + template.petition.ascii_filename + '_v' + str(template.version) + '.' + template.extension
   except:
     return HttpResponse(status=404)
   return response
