@@ -46,7 +46,6 @@ def filenameify(data):
 
 class Subject(models.Model):
   name = models.CharField(max_length=200)
-  containerdirectory = models.CharField(max_length=50)
 
   def __unicode__(self):
     return self.name
