@@ -23,5 +23,6 @@ bloodHound.initialize();
 // Instantiate the Typeahead UI
 $('.typeahead').typeahead(null, {
     display: 'value',
-    source: bloodHound.ttAdapter()
+    source: bloodHound.ttAdapter(),
+    limit: 10
 });
