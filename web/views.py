@@ -8,9 +8,7 @@ from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
 from haystack.query import SearchQuerySet
 from django.core.urlresolvers import reverse
-
 from .models import Petition, Template
-
 
 class PetitionListView(generic.ListView):
   template_name = 'web/petitionlist.html.j2'
@@ -21,6 +19,7 @@ class PetitionListView(generic.ListView):
 
 def indexsearch(request, q):
   searchStartTime = time.time()
+  # Limit query results with 100,
   results = SearchQuerySet().auto_query(q)[:100]
   searchElapsedTime = (time.time() - searchStartTime)*1000
   resultSet = []
@@ -34,7 +33,6 @@ def indexsearch(request, q):
 
   return render(request, 'web/index.html.j2', context)
 
-
 def index(request):
   try:
     searchString = request.POST['q']
@@ -45,8 +43,8 @@ def index(request):
 def autoComplete(request):
   try:
     searchString = request.GET['q']
-    sqs = SearchQuerySet().autocomplete(content_auto=searchString)[:5]
-    suggestions = [' '.join(result.object.name.split(' ')[:5]).strip() for result in sqs]
+    sqs = SearchQuerySet().autocomplete(content_auto=searchString)
+    suggestions = [' '.join(result.object.name.split(' ')).strip() for result in sqs]
     suggestion_data = json.dumps({
       'results': suggestions
       })
@@ -68,8 +66,10 @@ def download(request, ticket):
 def detailByName(request, name):
   petition = get_object_or_404(
     Petition.objects.filter(ascii_filename=name))
+  if petition.template_set.count() == 0:
+    return HttpResponse(status=404)
   context = {'petition': petition, 'templates_ordered': petition.template_set.order_by('-version')}
   if context['templates_ordered'].count > 0:
-      context['first_url'] = reverse('download', args=[context['templates_ordered'].first().downloadticket])
+    context['first_url'] = reverse('download', args=[context['templates_ordered'].first().downloadticket])
 
   return render(request, 'web/petitiondetail.html.j2', context)
