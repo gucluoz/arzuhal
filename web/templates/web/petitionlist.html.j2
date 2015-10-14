@@ -5,7 +5,7 @@
   <ul>
   {% for p in object_list %}
     <li>
-      <a href="{% url 'detail' p.pk %}">{{ p.name|truncatewords:5 }}</a> ({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)
+      <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:5 }}</a> ({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)
     </li>
   {% endfor %}
   </ul>
