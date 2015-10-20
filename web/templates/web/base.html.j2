@@ -48,6 +48,11 @@
     </footer>    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.js"><\/script>')</script>
+    <script>
+      $(document).ready(function(){
+        $('footer').delay(2000).animate({'opacity':'0'},1500)
+      });
+    </script>
     <script src="{% static 'web/js/vendor/bootstrap.min.js' %}"></script>
     {% block scriptcontent %}{% endblock scriptcontent %}
     </body>
