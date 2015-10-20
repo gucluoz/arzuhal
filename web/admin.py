@@ -10,7 +10,7 @@ class PetitionForm(forms.ModelForm):
 
   class Meta:
     model = Petition
-    fields = ['name', 'subject', 'description', 'keywords']
+    fields = ['name', 'subject', 'description', 'keywords', 'isActive', 'accessCount', 'downloadCount']
 
 class TemplateInline(admin.StackedInline):
   extra = 1

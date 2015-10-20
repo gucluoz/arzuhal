@@ -74,6 +74,7 @@ class Petition(models.Model):
   ascii_filename = models.CharField(max_length=200, blank=True)
   accessCount = models.IntegerField(default=0)
   downloadCount = models.IntegerField(default=0)
+  isActive = models.BooleanField(default=True)
 
   def save(self):
     super(Petition, self).save()
