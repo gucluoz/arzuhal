@@ -1,0 +1,11 @@
+{% load shuffle %}
+<div class="tagCloud">
+  <h4>{{ cloudTitle }}</h3>
+  <ul>
+  {% for i in cloudItems|shuffle %}
+    <li><a href="#" class="tagCloud-{{ i.weight }}">{{ i.name }}</a></li>
+  {% empty %}
+    <li>Boş.</li>
+  {% endfor %}
+  </ul>
+</div>

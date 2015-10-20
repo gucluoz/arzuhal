@@ -1,0 +1,20 @@
+<script>
+function loadSubject(subject){
+  document.getElementById('q').value = subject;
+  document.subjectListForm.submit();
+}
+</script>
+<form name="subjectListForm" action="{% url 'index' %}" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="q" id="q" />
+  <div class="subjectlist">
+    <h4>Konularına Göre</h4>
+    <ul class="list-unstyled">
+      {% for s in subjects %}
+      <li><a href="#" onclick="javascript: loadSubject('{{ s.name }}')">{{ s.name }}</a></li>
+      {% empty %}
+      <li>Boş.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</form>

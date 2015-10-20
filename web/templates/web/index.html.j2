@@ -5,45 +5,41 @@
 <link rel="stylesheet" href="{% static 'web/css/ac.css' %}">
 {% endblock headcontent %}
 {% block maincontent %}
-<div class="container">
-  <br>
-  <div class="row">
-      <div class="col-md-6">
-        <form action="{% url 'index' %}" method="POST">
-          {% csrf_token %}
-            <div id="custom-search-input">
-              <div class="input-group col-md-12">
-                  <input name="q" class="typeahead form-control" placeholder="Dilekçe Ara" />
-                  <span class="input-group-btn">
-                      <button type="submit" class="btn btn-info btn-lg" type="button">
-                          <i class="glyphicon glyphicon-search"></i>
-                      </button>
-                  </span>
-              </div>
-            </div>
-        </form>
+<div class="content">
+  <div class="mainbar">
+    <form action="{% url 'index' %}" method="POST">
+      {% csrf_token %}
+      <div id="custom-search-input">
+        <div class="input-group col-md-12">
+          <input name="q" class="typeahead form-control" placeholder="Dilekçe Ara" />
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-info btn-lg" type="button">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </span>
+        </div>
       </div>
+    </form>
+    {% if q %}  
+    "{{ q }}" için arama sonuçları :
+    {% for p in results %}
+    <p>
+      <h3>
+        <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:10 }}</a>
+      </h3>
+      <div>
+        <span>{{ p.description|truncatewords:20 }}</span><br/>
+        <span>({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)</span>
+      </div>
+    </p>
+    {% empty %}
+    <cite>Hiç bir sonuç bulunamadı :(</cite>
+    {% endfor %}
+    {% endif %}
   </div>
-  {% if q %}
-  <div class="row">
-    <div class="col-md-6">
-      "{{ q }}" için arama sonuçları :
-      {% for p in results %}
-        <p>
-          <h3>
-            <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:10 }}</a>
-          </h3>
-          <div>
-            <span>{{ p.description|truncatewords:20 }}</span><br/>
-            <span>({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)</span>
-          </div>
-        </p>
-      {% empty %}
-        <cite>Hiç bir sonuç bulunamadı :(</cite>
-      {% endfor %}
-    </div>
+  <div class="sidebar">
+    {% if subjects %}{% include "web/subjectlist.html.j2" %}{% endif %}
   </div>
-  {% endif %}
 </div>
 {% endblock maincontent %}
 {% block footercontent %}

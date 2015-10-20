@@ -10,6 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="{% static 'web/apple-touch-icon.png' %}">
         <link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' '%}">
+        <link rel="stylesheet" href="{% static 'web/css/main.css' '%}">
         <style>
             body {
                 padding-top: 50px;
@@ -33,15 +34,18 @@
         </div>
       </div>
     </nav>
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         {% block maincontent %}{% endblock maincontent %}
       </div>
-      <hr>
-      <footer>
-        <div class="col-md-4">2015</div><div class="col-md-*">{% block footercontent %}{% endblock footercontent %}</div>
-      </footer>
-    </div> <!-- /container -->        
+    </div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="container">
+      {% block footercontent %}{% endblock footercontent %}
+        </div>
+      </div>
+    </footer>    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.js"><\/script>')</script>
     <script src="{% static 'web/js/vendor/bootstrap.min.js' %}"></script>
