@@ -21,20 +21,32 @@
       </div>
     </form>
     {% if q %}  
-    "{{ q }}" için arama sonuçları :
-    {% for p in results %}
-    <p>
-      <h3>
-        <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:10 }}</a>
-      </h3>
-      <div>
-        <span>{{ p.description|truncatewords:20 }}</span><br/>
-        <span>({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)</span>
+      "{{ q }}" için arama sonuçları :
+      {% for p in results %}
+        <p>
+          <h3>
+            <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:10 }}</a>
+          </h3>
+          <div>
+            <span>{{ p.description|truncatewords:20 }}</span><br/>
+            <span>({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)</span>
+          </div>
+        </p>
+        {% empty %}
+          <cite>Hiç bir sonuç bulunamadı :(</cite>
+      {% endfor %}
+    {% endif %}
+    {% if latestPetitions %}
+      <div class="footer-latest">
+        <h3>Son Eklenen {{ latestPetitions.count }} Dilekçe</h3>
+        <ul class="list-unstyled">
+          {% for p in latestPetitions %}
+            <li>
+              <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:7 }}</a>
+            </li>
+          {% endfor %}
+        </ul>
       </div>
-    </p>
-    {% empty %}
-    <cite>Hiç bir sonuç bulunamadı :(</cite>
-    {% endfor %}
     {% endif %}
   </div>
   <div class="sidebar">
@@ -44,7 +56,7 @@
 {% endblock maincontent %}
 {% block footercontent %}
   {% if q %}
-    Arama süresi : {{ searchTime|floatformat:2 }} milisecond{{ searchTime|pluralize }}
+    Bulunan: {{ results|length }} | Arama süresi: {{ searchTime|floatformat:2 }} milisecond{{ searchTime|pluralize }}
   {% endif %}
 {% endblock %}
 

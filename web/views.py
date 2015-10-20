@@ -23,6 +23,9 @@ def subjectList():
   subjects = Subject.objects.order_by('name')[:50]
   return subjects
 
+def getLatestPetitions():
+  return Petition.objects.filter(isActive=True).order_by('-publishdate')[:5]
+
 def indexsearch(request, q):
   searchStartTime = time.time()
   results = SearchQuerySet().auto_query(q)[:100]
@@ -36,6 +39,12 @@ def indexsearch(request, q):
     'searchTime' : searchElapsedTime,
     'subjects' : subjectList(),
   }
+  #If search results are empty, show latest 5
+  #if len(resultSet) == 0:
+  
+  #show either way
+  context.update({'latestPetitions': getLatestPetitions()})
+
   return render(request, 'web/index.html.j2', context)
 
 def index(request):
@@ -43,7 +52,7 @@ def index(request):
     searchString = request.POST['q']
     return indexsearch(request,searchString)
   except:
-    return render(request, 'web/index.html.j2',{'subjects': subjectList()})
+    return render(request, 'web/index.html.j2',{'subjects': subjectList(),'latestPetitions': getLatestPetitions()})
 
 def autoComplete(request):
   try:
