@@ -11,7 +11,6 @@ from haystack.query import SearchQuerySet
 from django.core.urlresolvers import reverse
 from .models import Petition, Template, Subject
 
-
 class PetitionListView(generic.ListView):
   template_name = 'web/petitionlist.html.j2'
   model = Petition
