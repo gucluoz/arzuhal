@@ -19,28 +19,6 @@ class PetitionListView(generic.ListView):
   def get_queryset(self):
     return Petition.objects.order_by('-publishdate')
 
-
-def tagCloud():
-  MAX_WEIGHT = 8
-  MAX_KEYWORDS = 8
-  subjectsWithPetitionCount = Subject.objects.all().annotate(
-    count=Count('petition__id'))
-  subjects = subjectsWithPetitionCount.values('name','count').order_by('-count')[:MAX_KEYWORDS]
-  min_count = max_count = subjects[0]['count']
-  for keyword in subjects:
-    if keyword['count'] < min_count:
-      min_count = keyword['count']
-    if max_count < keyword['count']:
-      max_count = keyword['count']
-  range = float(max_count - min_count)
-  if range == 0.0:
-    range = 1.0
-  for keyword in subjects:
-    keyword['weight'] = int(
-        MAX_WEIGHT * (keyword['count'] - min_count) / range
-    )
-  return { 'cloudTitle': 'Konular','cloudItems': subjects}
-
 def subjectList():
   subjects = Subject.objects.order_by('name')[:50]
   return subjects
