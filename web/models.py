@@ -72,6 +72,8 @@ class Petition(models.Model):
   keywords = models.ManyToManyField(Keyword)
   description = models.CharField(max_length=1000)
   ascii_filename = models.CharField(max_length=200, blank=True)
+  accessCount = models.IntegerField(default=0)
+  downloadCount = models.IntegerField(default=0)
 
   def save(self):
     super(Petition, self).save()

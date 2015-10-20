@@ -61,6 +61,10 @@ def download(request, ticket):
   template = get_object_or_404(
     Template.objects.filter(downloadticket=ticket))
   try:
+    #Increment download count
+    template.petition.downloadCount += 1
+    template.petition.save()
+
     response = HttpResponse(FileWrapper(open(template.filename.path)),content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
     response['Content-Disposition'] = 'attachment; filename=' + template.petition.ascii_filename + '_v' + str(template.version) + '.' + template.extension
   except:
@@ -71,6 +75,11 @@ def download(request, ticket):
 def detailByName(request, name):
   petition = get_object_or_404(
     Petition.objects.filter(ascii_filename=name))
+
+  #Increment view count
+  petition.accessCount += 1
+  petition.save()
+
   if petition.template_set.count() == 0:
     return HttpResponse(status=404)
   context = {'petition': petition, 'templates_ordered': petition.template_set.order_by('-version')}

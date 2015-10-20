@@ -24,8 +24,8 @@
       </ul>
     </p>
   {% endif %}
-  <span>
-    <ul>
-    </ul>
-  </span>
 {% endblock maincontent %}
+
+{% block footercontent %}
+    Görüntüleme: {{ petition.accessCount }}, İndirme: {{ petition.downloadCount }}
+{% endblock %}
