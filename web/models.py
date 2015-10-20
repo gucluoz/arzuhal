@@ -5,6 +5,7 @@ import os
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 
 def generate_download_ticket(instance, filename):
   extension = filename.split('.')[-1]
@@ -80,6 +81,9 @@ class Petition(models.Model):
     super(Petition, self).save()
     self.ascii_filename = filenameify(self.name)[:80]
     super(Petition, self).save()
+
+  def get_absolute_url(self):
+    return reverse('detailbyName',args=[self.ascii_filename])
 
   def __unicode__(self):
     return self.name
