@@ -95,3 +95,6 @@ def detailByName(request, name):
     context['first_url'] = reverse('download', args=[context['templates_ordered'].first().downloadticket])
 
   return render(request, 'web/petitiondetail.html.j2', context)
+
+def kanunHtml(request):
+  return render(request,'web/dilekcekanun.html.j2')

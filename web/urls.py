@@ -11,4 +11,5 @@ urlpatterns = [
   url(r'^list/$', views.PetitionListView.as_view(), name='list'),
   url(r'^detail/(?P<name>[a-z0-9_]+)$', views.detailByName, name='detailbyName'),
   url(r'^d/(?P<ticket>[A-Za-z0-9]{32})', views.download, name='download'),
+  url(r'^kanun/', views.kanunHtml, name='kanunHtml'),
 ]
