@@ -66,16 +66,16 @@ class Keyword(models.Model):
     return self.name
 
 class Petition(models.Model):
-  name = models.CharField(max_length=200)
+  name = models.CharField('İsim', max_length=200)
   publishdate = models.DateTimeField('Date first published', default=timezone.now)
   publishedby = models.ForeignKey(User)
-  subject = models.ForeignKey(Subject)
-  keywords = models.ManyToManyField(Keyword)
-  description = models.CharField(max_length=1000)
+  subject = models.ForeignKey(Subject,verbose_name='Konu')
+  keywords = models.ManyToManyField(Keyword, blank=True, verbose_name='Anahtar Kelimeler')
+  description = models.TextField(verbose_name='Açıklama')
   ascii_filename = models.CharField(max_length=200, blank=True)
-  accessCount = models.IntegerField(default=0)
-  downloadCount = models.IntegerField(default=0)
-  isActive = models.BooleanField(default=True)
+  accessCount = models.IntegerField(default=0,verbose_name='Görüntüleme')
+  downloadCount = models.IntegerField(default=0,verbose_name='İndirme')
+  isActive = models.BooleanField(default=True,verbose_name='Aktif?')
 
   def save(self):
     super(Petition, self).save()
@@ -90,12 +90,12 @@ class Petition(models.Model):
 
 class Template(models.Model):
   version = models.IntegerField(default=1)
-  filename = models.FileField(upload_to=generate_download_ticket)
-  extension = models.CharField(max_length=10, blank=True, null=True)
+  filename = models.FileField(upload_to=generate_download_ticket,verbose_name='Dosya adı')
+  extension = models.CharField(max_length=10, blank=True, null=True,verbose_name='Uzantı')
   petition = models.ForeignKey(Petition)
   downloadticket = models.CharField(max_length=32, blank=True, null=True)
-  publishdate = models.DateTimeField('Date first published', default=timezone.now)
-  publishedby = models.ForeignKey(User)
+  publishdate = models.DateTimeField(default=timezone.now,verbose_name='Yayın Tarihi')
+  publishedby = models.ForeignKey(User, verbose_name='Yayınlayan')
 
   def __unicode__(self):
     return self.petition.name + " " + str(self.version)

@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 from django.contrib import admin
 from django.utils import timezone
 from django import forms
@@ -6,7 +8,7 @@ import pdb;
 from .models import Petition, Subject, Template, Keyword
 
 class PetitionForm(forms.ModelForm):
-  description = forms.CharField(max_length=200, widget=forms.Textarea)
+  description = forms.CharField(label='Açıklama',max_length=5000, widget=forms.Textarea)
 
   class Meta:
     model = Petition
