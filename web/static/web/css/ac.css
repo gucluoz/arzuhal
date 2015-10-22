@@ -8,7 +8,7 @@
 #custom-search-input input{
     border: 0;
     box-shadow: none;
-    width: 460px;
+    width: 100%;
 }
 
 #custom-search-input button{
@@ -30,6 +30,8 @@
 #custom-search-input .glyphicon-search{
     font-size: 23px;
 }
+
+.twitter-typeahead { width: 100%; } 
 
 .tt-query {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);

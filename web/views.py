@@ -19,11 +19,11 @@ class PetitionListView(generic.ListView):
     return Petition.objects.order_by('-publishdate')
 
 def subjectList():
-  subjects = Subject.objects.order_by('name')[:50]
+  subjects = Subject.objects.annotate(count=Count('petition')).order_by('-count')[:100]
   return subjects
 
 def getLatestPetitions():
-  return Petition.objects.filter(isActive=True).order_by('-publishdate')[:5]
+  return Petition.objects.filter(isActive=True).order_by('-publishdate')[:10]
 
 def indexsearch(request, q):
   searchStartTime = time.time()

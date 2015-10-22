@@ -6,7 +6,7 @@
 {% endblock headcontent %}
 {% block maincontent %}
 <div class="content">
-  <div class="mainbar">
+  <div class="col-md-6">
     <form action="{% url 'index' %}" method="POST">
       {% csrf_token %}
       <div id="custom-search-input">
@@ -38,18 +38,24 @@
     {% endif %}
     {% if latestPetitions %}
       <div class="footer-latest">
-        <h3>Son Eklenen {{ latestPetitions.count }} Dilekçe</h3>
-        <ul class="list-unstyled">
+        <h2>Son Eklenen {{ latestPetitions.count }} Dilekçe</h2>
+        <ul class="list-unstyled distinct">
           {% for p in latestPetitions %}
-            <li>
-              <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:7 }}</a>
-            </li>
+            <p>
+              <h3>
+                <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:10 }}</a>
+              </h3>
+              <div>
+                <span>{{ p.description|truncatewords:20 }}</span><br/>
+                <span>({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)</span>
+              </div>
+            </p>
           {% endfor %}
         </ul>
       </div>
     {% endif %}
   </div>
-  <div class="sidebar">
+  <div class="col-md-4 col-md-offset-2">
     {% if subjects %}{% include "web/subjectlist.html.j2" %}{% endif %}
   </div>
 </div>
