@@ -1,9 +1,3 @@
-<script>
-function loadSubject(subject){
-  document.getElementById('q').value = subject;
-  document.subjectListForm.submit();
-}
-</script>
 <form name="subjectListForm" action="{% url 'index' %}" method="POST">
   {% csrf_token %}
   <input type="hidden" name="q" id="q" />
@@ -11,7 +5,7 @@ function loadSubject(subject){
     <h4>Konular</h4>
     <ul class="list-unstyled">
       {% for s in subjects %}
-      <li><a href="#" onclick="javascript: loadSubject('{{ s.name }}')">{{ s.name }} ({{s.count}})</a></li>
+      <li><a href="{% url 'indexsearch' s.name %}">{{ s.name }} ({{s.count}})</a></li>
       {% empty %}
       <li>Boş.</li>
       {% endfor %}
