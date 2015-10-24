@@ -12,4 +12,5 @@ urlpatterns = [
   url(r'^detail/(?P<name>[a-z0-9_]+)$', views.detailByName, name='detailbyName'),
   url(r'^d/(?P<ticket>[A-Za-z0-9]{32})', views.download, name='download'),
   url(r'^kanun/', views.kanunHtml, name='kanunHtml'),
+  url(r'^nasil/yazilir/', views.nasilYazilirHtml, name='nasilYazilirHtml'),
 ]

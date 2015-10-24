@@ -98,3 +98,6 @@ def detailByName(request, name):
 
 def kanunHtml(request):
   return render(request,'web/dilekcekanun.html.j2')
+
+def nasilYazilirHtml(request):
+  return render(request, 'web/nasilyazilir.html.j2')

@@ -36,10 +36,19 @@
         {% empty %}
           <cite>Hiç bir sonuç bulunamadı :(</cite>
       {% endfor %}
+    {% else %}
+      <h3>Nedir ?</h3>
+      <p>dilek.co platformu, günlük yaşantınızda bir çok alanda karşılaşabileceğiniz resmi haberleşme ihtiyaçlarınızda, olduğu gibi ya da değiştirerek kullanabileceğiniz çeşitli konu ve alanlarda dilekçe örneklerini bulabileceğiniz bir paylaşım platformudur. İhtiyacınız olan dilekçe konu ya da başlığını ya da bir kısmını yukarıdaki arama alanına girerek ya da ilgilendiğiniz konu sağdaki bölümünde bulunuyorsa seçerek örneklere ulaşabilirsiniz.</p>
+
+      <h3>Ne değildir ?</h3>
+      <p>dilek.co platformu, bilgi ve paylaşım amaçlı oluşturulmuş bir platformdur. Hukuki danışmanlık ya da destek vermemektedir. Platformda bulunan bütün içeriklerin kullanılmadan önce dikkatlice okunması, gözden geçirilmesi ve ihtiyaca uyup uymadığının değerlendirilmesi tamamen kullanıcının sorumluluğundadır. dilek.co platformu, içeriklerinde yer alan herhangi bir bilgi, belge, evrakın kullanılması, kullanılmaması ya da hatalı kullanılması sonucu ortaya çıkabilecek herhangi bir zarardan sorumlu değildir.</p>
+
+      <h3>Dilekçemi bulamadım</h3>
+      <p>İhtiyacınıza uygun bir dilekçe örneği bulamadıysanız, yorumlar kısmına ihtiyacınızın detaylarını belirtirseniz sonraki güncellemede editorlerimiz tarafından dikkate alınacakır. Bir dilekçe örneği talep etmeniz, bunun karşılacağı anlamı taşımamakla birlikte, editor, elinden gelen çabayı göstermektedir. İsteğinize uygun bir dilekçe örneği oluşturulursa, yorumda girdiğiniz mail adresine bilgilendirme postası gönderilecektir.</p>
     {% endif %}
     {% if latestPetitions %}
       <div class="footer-latest">
-        <h2>Son Eklenen {{ latestPetitions.count }} Dilekçe</h2>
+        <h3>Son Eklenen {{ latestPetitions.count }} Dilekçe</h3>
         <ul class="list-unstyled distinct">
           {% for p in latestPetitions %}
             <p>
@@ -63,7 +72,7 @@
 {% endblock maincontent %}
 {% block footercontent %}
   {% if q %}
-    Bulunan: {{ results|length }} | Arama süresi: {{ searchTime|floatformat:2 }} milisecond{{ searchTime|pluralize }}
+    Gösterilen: {{ results|length }} | Arama süresi: {{ searchTime|floatformat:2 }} milisecond{{ searchTime|pluralize }}
   {% endif %}
 {% endblock %}
 

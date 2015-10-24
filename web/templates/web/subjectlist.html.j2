@@ -1,14 +1,30 @@
-<form name="subjectListForm" action="{% url 'index' %}" method="POST">
-  {% csrf_token %}
-  <input type="hidden" name="q" id="q" />
-  <div class="subjectlist">
-    <h4>Konular</h4>
-    <ul class="list-unstyled">
-      {% for s in subjects %}
-      <li><a href="{% url 'indexsearch' s.name %}">{{ s.name }} ({{s.count}})</a></li>
-      {% empty %}
-      <li>Boş.</li>
+<div class="subjectlist">
+  <h3>Konular</h3>
+  <ul class="list-unstyled">
+    {% for s in subjects %}
+    <li><a href="{% url 'indexsearch' s.name %}">{{ s.name }} ({{s.count}})</a></li>
+    {% empty %}
+    <li>Boş.</li>
+    {% endfor %}
+  </ul>
+</div>
+
+
+{% if latestPetitions %}
+  <div class="footer-latest">
+    <h3>Son Eklenen {{ latestPetitions.count }} Dilekçe</h3>
+    <ul class="list-unstyled distinct">
+      {% for p in latestPetitions %}
+        <p>
+          <h3>
+            <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:10 }}</a>
+          </h3>
+          <div>
+            <span>{{ p.description|truncatewords:20 }}</span><br/>
+            <span>({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)</span>
+          </div>
+        </p>
       {% endfor %}
     </ul>
   </div>
-</form>
+{% endif %}
