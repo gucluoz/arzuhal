@@ -1,5 +1,5 @@
 {% extends "web/base.html.j2" %}
-
+{% block headcontent %}<meta name="description" content="{{ petition.description }}">{% endblock headcontent %}
 {% block maincontent %}
   <h1>{{ petition.name }}</h1>
   <p>{{ petition.description }}</p>
