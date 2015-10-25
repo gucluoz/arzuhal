@@ -9,7 +9,8 @@ from django.db.models import Count
 from django.core.servers.basehttp import FileWrapper
 from haystack.query import SearchQuerySet
 from django.core.urlresolvers import reverse
-from .models import Petition, Template, Subject
+from django.utils import timezone
+from .models import Petition, Template, Subject, SearchRecord
 
 class PetitionListView(generic.ListView):
   template_name = 'web/petitionlist.html.j2'
@@ -40,9 +41,12 @@ def indexsearch(request, q):
   }
   #If search results are empty, show latest 5
   #if len(resultSet) == 0:
-  
   #show either way
   context.update({'latestPetitions': getLatestPetitions()})
+
+  #log search info
+  log = SearchRecord(keyword=q,searchTime=timezone.now(),resultcount=len(resultSet))
+  log.save()
 
   return render(request, 'web/index.html.j2', context)
 

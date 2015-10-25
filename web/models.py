@@ -99,3 +99,13 @@ class Template(models.Model):
 
   def __unicode__(self):
     return self.petition.name + " " + str(self.version)
+
+class SearchRecord(models.Model):
+  keyword = models.CharField(max_length=200, verbose_name='Arama metni')
+  searchTime = models.DateTimeField(default=timezone.now, verbose_name='Arama tarihi')
+  resultcount = models.IntegerField(default=0)
+
+  def __unicode__(self):
+    return self.keyword
+
+

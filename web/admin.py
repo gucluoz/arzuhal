@@ -5,7 +5,7 @@ from django.utils import timezone
 from django import forms
 import pdb;
 
-from .models import Petition, Subject, Template, Keyword
+from .models import Petition, Subject, Template, Keyword, SearchRecord
 
 class PetitionForm(forms.ModelForm):
   description = forms.CharField(label='Açıklama',max_length=5000, widget=forms.Textarea)
@@ -32,3 +32,4 @@ admin.site.register(Petition, PetitionAdmin)
 admin.site.register(Subject)
 admin.site.register(Template)
 admin.site.register(Keyword)
+admin.site.register(SearchRecord)
