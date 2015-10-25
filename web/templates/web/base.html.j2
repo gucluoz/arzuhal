@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{% block title %}Dilekçe Örneği, Başvuru Örneği, Form Örneği{% endblock %}</title>
+        <title>{% block title %}Dilekçe Örnekleri, Başvuru Örneği, Matbu Formlar{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="{% static 'web/apple-touch-icon.png' %}">
         <link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' '%}">
@@ -29,8 +29,6 @@
             <ul class="nav navbar-nav">
               <li><a href="{% url 'kanunHtml' %}">Kanun</a></li>
               <li><a href="{% url 'nasilYazilirHtml' %}">Nasıl Yazılır?</a></li>
-              <li><a href="#">Konularına Göre</a></li>
-              <li><a href="{% url 'list' %}">Tam Liste</a></li>
             </ul>
           </div>
       </div>
