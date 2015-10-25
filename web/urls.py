@@ -14,5 +14,5 @@ urlpatterns = [
   url(r'^kanun/', views.kanunHtml, name='kanunHtml'),
   url(r'^nasil/yazilir/', views.nasilYazilirHtml, name='nasilYazilirHtml'),
   url(r'^comment/', views.postComment, name='postComment'),
-
+  url(r'^tuketici/hakem/heyeti', views.thhBasvuruHtml, name='thhBasvuruHtml'),
 ]
