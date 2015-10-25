@@ -72,13 +72,16 @@ class Petition(models.Model):
   subject = models.ForeignKey(Subject,verbose_name='Konu')
   keywords = models.ManyToManyField(Keyword, blank=True, verbose_name='Anahtar Kelimeler')
   description = models.TextField(verbose_name='Açıklama')
-  ascii_filename = models.CharField(max_length=200, blank=True)
+  ascii_filename = models.CharField(max_length=200, blank=True, verbose_name='URL Görünen Ad [Dikkat!]')
   accessCount = models.IntegerField(default=0,verbose_name='Görüntüleme')
   downloadCount = models.IntegerField(default=0,verbose_name='İndirme')
   isActive = models.BooleanField(default=True,verbose_name='Aktif?')
+  retainAsciiFilename = True
 
   def save(self):
     super(Petition, self).save()
+    if self.ascii_filename and self.retainAsciiFilename:
+      return
     self.ascii_filename = filenameify(self.name)[:80]
     super(Petition, self).save()
 
