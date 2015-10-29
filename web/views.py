@@ -121,8 +121,7 @@ def postComment(request):
       comment = Comment(name=request.POST['name'],
         email=request.POST['email'], comment=request.POST['comment'],
         petition_id=request.POST['parentid'])
-      print comment
-      #comment.save()
+      comment.save()
       return HttpResponse(status=200)
     else:
       return HttpResponse(status=403)
