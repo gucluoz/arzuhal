@@ -24,7 +24,60 @@
       </ul>
     </p>
   {% endif %}
+
+  <div class="row" id="commentrow">
+    <div class="col-md-4">
+      <div class="comment-form">
+        <h3>Soru Sor :</h3>
+        <form name="comment" id="comment" method="POST" class="toggle-disabled">
+          {% csrf_token %}
+          <input type="hidden" name="parentid" id="parentid" value={{ petition.id }} />
+          <div class="form-group">
+            <label for="name">Ad Soyad</label>
+            <input type="text" data-validation-error-msg="Ad ve soyadınızı girin."  data-validation="required" data-validation-event="keyup" class="form-control" id="name" name="name"/>
+          </div>
+          <div class="form-group">
+            <label for="email">E-Posta</label>
+            <input type="email" data-validation="email" data-validation-event="keyup" data-validation-error-msg="Geçerli bir eposta adresi girin." class="form-control" id="email" name="email"/>
+          </div>
+          <div class="form-group">
+            <label for="comment">Soru / Yorum</label>
+            <textarea rows="7" data-validation="required" data-validation-error-msg="Yorum girin." class="form-control" id="comment" name="comment">
+            </textarea>
+          </div>
+          <div class="form-group">
+            <a type="submit" class="btn btn-info btn-md" name="postcomment" id="postcomment" >
+              <span class="glyphicon glyphicon-pencil" aria-hidden="true" /> Yorum 
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div name="col-md-4">
+      {% if petition.comment_set.all|length > 0 %}
+        <div class="col-md-4">
+          <div class="comment-form">
+            <h3>Yorumlar :</h3>
+            {% for c in petition.comment_set.all|dictsortreversed:"timestamp" %}
+            <p>
+              <i>{{ c.timestamp }} <strong>{{ c.name }}</strong>:</i><br/>{{ c.comment }}
+            </p>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
 {% endblock maincontent %}
+
+{% block scriptcontent %}
+  {% load static %}
+  <script src="{% static 'web/js/comment.js' %}"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.8/jquery.form-validator.min.js"></script>
+{% endblock scriptcontent %}
 
 {% block footercontent %}
     Görüntüleme: {{ petition.accessCount }} | İndirme: {{ petition.downloadCount }}

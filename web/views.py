@@ -10,7 +10,8 @@ from django.core.servers.basehttp import FileWrapper
 from haystack.query import SearchQuerySet
 from django.core.urlresolvers import reverse
 from django.utils import timezone
-from .models import Petition, Template, Subject, SearchRecord
+from django.core import serializers
+from .models import Petition, Template, Subject, SearchRecord,Comment
 
 class PetitionListView(generic.ListView):
   template_name = 'web/petitionlist.html.j2'
@@ -25,6 +26,9 @@ def subjectList():
 
 def getLatestPetitions():
   return Petition.objects.filter(isActive=True).order_by('-publishdate')[:10]
+
+def getLatestComments():
+  return Comment.objects.order_by('-timestamp')[:10]
 
 def indexsearch(request, q):
   searchStartTime = time.time()
@@ -43,6 +47,7 @@ def indexsearch(request, q):
   #if len(resultSet) == 0:
   #show either way
   context.update({'latestPetitions': getLatestPetitions()})
+  context.update({'latestComments': getLatestComments()})
 
   #log search info
   log = SearchRecord(keyword=q,searchTime=timezone.now(),resultcount=len(resultSet))
@@ -55,7 +60,9 @@ def index(request):
     searchString = request.POST['q']
     return indexsearch(request,searchString)
   except:
-    return render(request, 'web/index.html.j2',{'subjects': subjectList(),'latestPetitions': getLatestPetitions()})
+    return render(request, 'web/index.html.j2',{'subjects': subjectList(),
+      'latestPetitions': getLatestPetitions(),
+      'latestComments': getLatestComments()})
 
 def autoComplete(request):
   try:
@@ -105,3 +112,17 @@ def kanunHtml(request):
 
 def nasilYazilirHtml(request):
   return render(request, 'web/nasilyazilir.html.j2')
+
+def postComment(request):
+  try:
+    if request.is_ajax():
+      comment = Comment(name=request.POST['name'],
+        email=request.POST['email'], comment=request.POST['comment'],
+        petition_id=request.POST['parentid'])
+      print comment
+      #comment.save()
+      return HttpResponse(status=200)
+    else:
+      return HttpResponse(status=403)
+  except:
+    return HttpResponse(status=404)

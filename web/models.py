@@ -111,4 +111,13 @@ class SearchRecord(models.Model):
   def __unicode__(self):
     return self.keyword
 
+class Comment(models.Model):
+  name = models.CharField(verbose_name='Ad Soyad', max_length=200)
+  email = models.CharField(verbose_name='E-Posta', max_length=200)
+  comment = models.TextField(verbose_name='Yorum')
+  timestamp = models.DateTimeField(default=timezone.now)
+  petition = models.ForeignKey(Petition, blank=True, null=True)
+
+  def __unicode__(self):
+    return self.petition.name + '-' + self.name + '/' + self.email
 

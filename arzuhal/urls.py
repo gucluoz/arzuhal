@@ -11,5 +11,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^web/', include('web.urls')),
     url(r'^harita\.xml$', sitemap, {'sitemaps': sitemaps},
-    name='django.contrib.sitemaps.views.sitemap')
+      name='django.contrib.sitemaps.views.sitemap'),
 ]

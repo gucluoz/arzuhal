@@ -10,19 +10,13 @@
 </div>
 
 
-{% if latestPetitions %}
+{% if latestComments %}
   <div class="footer-latest">
-    <h3>Son Eklenen {{ latestPetitions.count }} Dilekçe</h3>
+    <h3>Son Yorumlar</h3>
     <ul class="list-unstyled distinct">
-      {% for p in latestPetitions %}
+      {% for c in latestComments|dictsortreversed:"timestamp" %}
         <p>
-          <h3>
-            <a href="{% url 'detailbyName' p.ascii_filename %}">{{ p.name|truncatewords:10 }}</a>
-          </h3>
-          <div>
-            <span>{{ p.description|truncatewords:20 }}</span><br/>
-            <span>({{ p.publishdate|timesince }} önce {{ p.publishedby }} tarafından)</span>
-          </div>
+          <i>{{ c.timestamp }} <strong>{{ c.name }}</strong>:</i><br/>{{ c.comment }}
         </p>
       {% endfor %}
     </ul>
