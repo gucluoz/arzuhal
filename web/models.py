@@ -117,6 +117,7 @@ class Comment(models.Model):
   comment = models.TextField(verbose_name='Yorum')
   timestamp = models.DateTimeField(default=timezone.now)
   petition = models.ForeignKey(Petition, blank=True, null=True)
+  isApproved = models.BooleanField(default=True, verbose_name='Onay?')
 
   def __unicode__(self):
     return self.petition.name + '-' + self.name + '/' + self.email

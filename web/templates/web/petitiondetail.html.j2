@@ -56,11 +56,11 @@
   </div>
   <div class="row">
     <div name="col-md-4">
-      {% if petition.comment_set.all|length > 0 %}
+      {% if comments_ordered|length > 0 %}
         <div class="col-md-4">
           <div class="comment-form">
             <h3>Yorumlar :</h3>
-            {% for c in petition.comment_set.all|dictsortreversed:"timestamp" %}
+            {% for c in comments_ordered %}
             <p>
               <i>{{ c.timestamp }} <strong>{{ c.name }}</strong>:</i><br/>{{ c.comment }}
             </p>

@@ -28,7 +28,7 @@ def getLatestPetitions():
   return Petition.objects.filter(isActive=True).order_by('-publishdate')[:10]
 
 def getLatestComments():
-  return Comment.objects.order_by('-timestamp')[:10]
+  return Comment.objects.filter(isApproved=True).order_by('-timestamp')[:10]
 
 def indexsearch(request, q):
   searchStartTime = time.time()
@@ -104,6 +104,8 @@ def detailByName(request, name):
   context = {'petition': petition, 'templates_ordered': petition.template_set.order_by('-version')}
   if context['templates_ordered'].count > 0:
     context['first_url'] = reverse('download', args=[context['templates_ordered'].first().downloadticket])
+
+  context.update({'comments_ordered' : petition.comment_set.filter(isApproved=True).order_by('-timestamp')})
 
   return render(request, 'web/petitiondetail.html.j2', context)
 
