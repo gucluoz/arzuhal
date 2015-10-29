@@ -16,7 +16,8 @@
     <ul class="list-unstyled distinct">
       {% for c in latestComments|dictsortreversed:"timestamp" %}
         <p>
-          <i>{{ c.timestamp }} <strong>{{ c.name }}</strong>:</i><br/>{{ c.comment }}
+          <a href="{% url 'detailbyName' c.petition.ascii_filename %}"><i>{{ c.timestamp }} <strong>{{ c.name }}</strong>:</i></a>
+          <br/>{{ c.comment }}
         </p>
       {% endfor %}
     </ul>
