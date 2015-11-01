@@ -21,7 +21,7 @@ class PetitionListView(generic.ListView):
     return Petition.objects.order_by('-publishdate')
 
 def subjectList():
-  subjects = Subject.objects.annotate(count=Count('petition')).order_by('-count')[:100]
+  subjects = Subject.objects.filter(petition__isActive = True).annotate(count=Count('petition')).filter(count__gt = 0).order_by('-count')[:100]
   return subjects
 
 def getLatestPetitions():
