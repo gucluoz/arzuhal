@@ -23,7 +23,7 @@ class TemplateInline(admin.StackedInline):
 
 class PetitionAdmin(admin.ModelAdmin):
   form = PetitionForm
-  readonly_fields = ['accessCount', 'downloadCount']
+  readonly_fields = ['accessCount', 'downloadCount', 'ascii_filename']
   inlines = [ TemplateInline, ]
 
   def save_model(save, request, obj, form, change):
