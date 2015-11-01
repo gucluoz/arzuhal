@@ -129,5 +129,5 @@ def postComment(request):
     return HttpResponse(status=404)
 
 def thhBasvuruHtml(request):
-  return render(request, 'web/thhBasvuru.html.j2')
+  return render(request, 'web/thhbasvuru.html.j2')
 
